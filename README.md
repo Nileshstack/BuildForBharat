@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Build for Bharat 2026
 
-## Getting Started
+An event site built with Next.js App Router, TypeScript, Tailwind CSS v4, Framer Motion, and Lucide icons. Event copy and schedule data live in `data/event.ts`.
 
-First, run the development server:
+## Run locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000). Useful routes are `/`, `/tracks`, `/prizes`, `/schedule`, `/rules`, `/faq`, and `/contact`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Edit event content
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Use `data/event.ts` as the source of truth for public event details:
 
-## Learn More
+- Update the event name, tagline, dates, venue, eligibility, team size, fee, prize pool, and registration deadline in the `event` object.
+- Keep date/time values as ISO strings with an explicit `+05:30` offset so comparisons and displays remain in Indian Standard Time.
+- Update `stages` and `daySchedule` together when event timing changes. The schedule page, announcement ticker, calendar download, and animated sky use these timestamps.
+- Edit `tracks`, `innovationAreas`, `aiChallenge`, `techGuidance`, `judging`, `deliverables`, `finalRoundMustExplain`, and `designPrinciples` to update their corresponding pages.
+- FAQ entries include a category and an `isPlaceholder` flag. The FAQ page and its FAQPage structured data are generated from this list.
+- Replace entries marked as placeholders in `generalRules`, `teamSize.note`, `registrationDeadline.note`, `contacts`, and `organiserCards` before publishing confirmed information.
+- `REGISTER_URL` is the single registration destination. Registration buttons link to Unstop and close automatically at the configured deadline.
 
-To learn more about Next.js, take a look at the following resources:
+The hero poster is `public/images/poster.png`. Replace it with the approved event artwork at the same path to keep the existing Open Graph and page image references.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deploy to Vercel
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Push the repository to a Git provider supported by Vercel.
+2. Import the repository in Vercel and keep the detected Next.js build settings.
+3. Set `NEXT_PUBLIC_SITE_URL` to the canonical public origin, for example `https://events.example.org` after connecting the chosen domain. Vercel's deployment URL is used when this variable is unset.
+4. Deploy, then verify the home, tracks, prizes, schedule, rules, FAQ, and contact routes. Check `/sitemap.xml`, `/robots.txt`, and the Open Graph preview image.
 
-## Deploy on Vercel
+## Validation
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm run lint
+npx tsc --noEmit
+npm run build
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+In development only, `/schedule?simulate=2026-10-31T03:00` previews the live night schedule and corresponding sky phase. The simulation query is ignored in production.

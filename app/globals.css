@@ -1,26 +1,104 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f5fbff;
+  --foreground: #0b1b3a;
+  --navy: #0b1b3a;
+  --saffron: #ff7a1a;
+  --india-green: #16a34a;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-navy: var(--navy);
+  --color-saffron: var(--saffron);
+  --color-india-green: var(--india-green);
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-poppins);
+  --font-tagline: var(--font-playfair);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@utility tricolour-text {
+  background-image: linear-gradient(100deg, #ff7a1a 0%, #0b1b3a 48%, #16a34a 100%);
+  background-clip: text;
+  color: transparent;
+}
+
+@utility tricolour-divider {
+  height: 3px;
+  background: linear-gradient(90deg, #ff7a1a 0 33.33%, #ffffff 33.33% 66.66%, #16a34a 66.66% 100%);
+}
+
+@utility glass-card {
+  border: 1px solid rgb(255 255 255 / 0.72);
+  background: rgb(255 255 255 / 0.68);
+  box-shadow: 0 18px 50px rgb(11 27 58 / 0.08);
+  backdrop-filter: blur(18px);
+}
+
+@utility spotlight-card {
+  background: radial-gradient(420px circle at var(--spotlight-x, 50%) var(--spotlight-y, 0%), rgb(255 255 255 / 0.96), rgb(255 255 255 / 0.62) 62%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: #f5fbff;
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
 }
 
 body {
-  background: var(--background);
+  min-height: 100vh;
+  margin: 0;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(145deg, #eaf7ff 0%, #ffffff 54%, #f0fff6 100%);
+  font-family: var(--font-inter), sans-serif;
+  overflow-x: hidden;
+}
+
+@keyframes aurora-drift-one {
+  0%, 100% { transform: translate3d(-3%, -2%, 0) scale(1); }
+  50% { transform: translate3d(4%, 3%, 0) scale(1.08); }
+}
+
+@keyframes aurora-drift-two {
+  0%, 100% { transform: translate3d(2%, 2%, 0) scale(1.05); }
+  50% { transform: translate3d(-4%, -3%, 0) scale(0.96); }
+}
+
+@keyframes aurora-drift-three {
+  0%, 100% { transform: translate3d(0, 4%, 0) scale(0.96); }
+  50% { transform: translate3d(3%, -4%, 0) scale(1.06); }
+}
+
+@keyframes ribbon-flow {
+  0%, 100% { transform: translate3d(-1.5%, 0, 0); }
+  50% { transform: translate3d(1.5%, 0, 0); }
+}
+
+@keyframes star-twinkle {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 0.9; }
+}
+
+@keyframes chakra-spin {
+  to { rotate: 360deg; }
+}
+
+@keyframes marquee-scroll {
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
