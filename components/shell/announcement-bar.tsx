@@ -3,28 +3,32 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Clock3 } from "lucide-react";
-import { event } from "@/data/event";
+import { event, REGISTER_URL } from "@/data/event";
 import { formatIst, useNow } from "@/hooks/use-now";
+import {
+  getRegistrationStatus,
+  type RegistrationStatus,
+} from "@/lib/registration";
 
-const dayInMilliseconds = 24 * 60 * 60 * 1000;
-
-function getAnnouncements(now: Date | null): string[] {
-  if (!now) return ["Registration information loading", "Event date loading"];
+function getAnnouncements(
+  now: Date | null,
+  registrationStatus: RegistrationStatus,
+): string[] {
+  const registrationMessage = registrationStatus.isOpen
+    ? registrationStatus.daysLeft === null
+      ? "Registrations open on Unstop"
+      : `Registrations open · ${registrationStatus.daysLeft} ${
+          registrationStatus.daysLeft === 1 ? "day" : "days"
+        } left`
+    : registrationStatus.label;
+  if (!now) return [registrationMessage];
 
   const timestamp = now.getTime();
-  const registrationCloses = Date.parse(event.registrationDeadline.value);
   const eventStarts = Date.parse(event.dates.start);
   const eventEnds = Date.parse(event.dates.end);
-  const registrationDays = Math.ceil(
-    (registrationCloses - timestamp) / dayInMilliseconds,
+  const startsInDays = Math.ceil(
+    (eventStarts - timestamp) / (24 * 60 * 60 * 1000),
   );
-  const startsInDays = Math.ceil((eventStarts - timestamp) / dayInMilliseconds);
-  const registrationMessage =
-    registrationDays < 0
-      ? "Registration closed"
-      : registrationDays === 0
-        ? "Registration closes today"
-        : `Registration closes in ${registrationDays} ${registrationDays === 1 ? "day" : "days"}`;
 
   if (timestamp >= eventEnds) return [registrationMessage, "Event completed"];
   if (timestamp >= eventStarts) {
@@ -55,8 +59,9 @@ function getAnnouncements(now: Date | null): string[] {
 
 export function AnnouncementBar() {
   const now = useNow();
+  const registrationStatus = getRegistrationStatus(now);
   const reducedMotion = useReducedMotion();
-  const announcements = getAnnouncements(now);
+  const announcements = getAnnouncements(now, registrationStatus);
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
@@ -82,7 +87,18 @@ export function AnnouncementBar() {
             transition={{ duration: reducedMotion ? 0 : 0.22 }}
             className="truncate"
           >
-            {message}
+            {registrationStatus.isOpen ? (
+              <a
+                href={REGISTER_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline underline-offset-2 hover:text-saffron focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-saffron"
+              >
+                {message}
+              </a>
+            ) : (
+              message
+            )}
           </motion.p>
         </AnimatePresence>
       </div>

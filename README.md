@@ -20,8 +20,8 @@ Use `data/event.ts` as the source of truth for public event details:
 - Update `stages` and `daySchedule` together when event timing changes. The schedule page, announcement ticker, calendar download, and animated sky use these timestamps.
 - Edit `tracks`, `innovationAreas`, `aiChallenge`, `techGuidance`, `judging`, `deliverables`, `finalRoundMustExplain`, and `designPrinciples` to update their corresponding pages.
 - FAQ entries include a category and an `isPlaceholder` flag. The FAQ page and its FAQPage structured data are generated from this list.
-- Replace entries marked as placeholders in `generalRules`, `teamSize.note`, `registrationDeadline.note`, `contacts`, and `organiserCards` before publishing confirmed information.
-- `REGISTER_URL` is the single registration destination. Registration buttons link to Unstop and close automatically at the configured deadline.
+- Replace entries marked as placeholders in `generalRules`, `teamSize.note`, `contacts`, and `organiserCards` before publishing confirmed information.
+- `REGISTER_URL`, `REGISTRATION_OPEN`, `registrationDeadline`, and `registrationMode` in `data/event.ts` control registration. Manual mode follows the master switch; auto mode also closes at the configured deadline.
 
 The hero poster is `public/images/poster.png`. Replace it with the approved event artwork at the same path to keep the existing Open Graph and page image references.
 

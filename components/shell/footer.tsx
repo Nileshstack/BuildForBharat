@@ -55,10 +55,7 @@ export function Footer() {
           </p>
         </div>
         <div className="lg:justify-self-end">
-          <RegisterButton
-            label="Unstop registration"
-            className="w-full sm:w-auto"
-          />
+          <RegisterButton className="w-full sm:w-auto" />
         </div>
       </div>
       <div className="border-t border-navy/10 px-5 py-4 text-center text-xs text-navy/50">

@@ -206,47 +206,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section
-        id="prizes"
-        aria-label="Event statistics"
-        className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-y divide-navy/10 px-5 py-7 sm:px-8 md:grid-cols-3 md:divide-y-0 lg:grid-cols-5"
-      >
-        <div className="px-4 py-4 first:pl-0">
-          <p className="font-heading text-2xl font-semibold tabular-nums text-navy sm:text-3xl">
-            <CountUp value={prizePoolValue} prefix="₹" />
-          </p>
-          <p className="mt-1 text-xs text-navy/60">Prize pool</p>
-        </div>
-        <div className="px-4 py-4 lg:border-l lg:border-navy/10">
-          <p className="font-heading text-2xl font-semibold tabular-nums text-navy sm:text-3xl">
-            <CountUp value={event.tracks.length} />
-          </p>
-          <p className="mt-1 text-xs text-navy/60">Tracks</p>
-        </div>
-        <div className="px-4 py-4 lg:border-l lg:border-navy/10">
-          <p className="font-heading text-2xl font-semibold tabular-nums text-navy sm:text-3xl">
-            <CountUp
-              value={event.tracks.length * event.prizes.perTrack.length}
-            />
-          </p>
-          <p className="mt-1 text-xs text-navy/60">Winners</p>
-        </div>
-        <div className="px-4 py-4 lg:border-l lg:border-navy/10">
-          <p className="font-heading text-2xl font-semibold tabular-nums text-navy sm:text-3xl">
-            <CountUp value={durationValue} prefix="~" suffix=" hours" />
-          </p>
-          <p className="mt-1 text-xs text-navy/60">Build time</p>
-        </div>
-        <div className="col-span-2 px-4 py-4 sm:col-span-1 lg:border-l lg:border-navy/10">
-          <p className="font-heading text-2xl font-semibold tabular-nums text-navy sm:text-3xl">
-            <CountUp
-              value={Number(expectedTeamRange[0])}
-              suffix={`-${expectedTeamRange[1]}`}
-            />
-          </p>
-          <p className="mt-1 text-xs text-navy/60">Teams expected</p>
-        </div>
-      </section>
+      
 
       <section
         id="about"

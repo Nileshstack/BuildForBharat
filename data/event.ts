@@ -1,5 +1,8 @@
 export const REGISTER_URL =
   "https://unstop.com/p/build-for-bharat-2026-software-hardware-hackathon-kiet-group-of-institutions-delhi-ncr-1767548";
+export const REGISTRATION_OPEN = true;
+export const registrationDeadline = "2026-10-15T23:59:00+05:30";
+export const registrationMode: "manual" | "auto" = "manual";
 
 export type ScheduleType = "ceremony" | "build" | "break" | "eval" | "fun" | "night";
 export type FAQCategory = "General" | "Teams" | "Submission" | "Venue" | "Judging";
@@ -24,7 +27,6 @@ export interface EventData {
   prizePool: string;
   teamSize: { min: number; max: number; note: string };
   expectedTeams: string;
-  registrationDeadline: { value: string; isPlaceholder: boolean; note: string };
   stages: Array<{
     name: string;
     start: string;
@@ -110,11 +112,6 @@ export const event: EventData = {
   prizePool: "₹1,20,000",
   teamSize: { min: 2, max: 4, note: "Confirm team size before publishing." },
   expectedTeams: "60-70",
-  registrationDeadline: {
-    value: "2026-10-01T00:00:00+05:30",
-    isPlaceholder: true,
-    note: "Confirm registration deadline.",
-  },
   stages: [
     {
       name: "PPT Submission & Screening",

@@ -2,22 +2,19 @@
 
 import { useState, type PointerEvent } from "react";
 import { useReducedMotion } from "framer-motion";
-import { event, REGISTER_URL } from "@/data/event";
+import { REGISTER_URL } from "@/data/event";
 import { useNow } from "@/hooks/use-now";
+import { getRegistrationStatus } from "@/lib/registration";
 
 export function RegisterButton({
   className = "",
-  label = "Register on Unstop",
 }: {
   className?: string;
-  label?: string;
 }) {
   const now = useNow();
+  const status = getRegistrationStatus(now);
   const reducedMotion = useReducedMotion();
   const [offset, setOffset] = useState({ x: 0, y: 0 });
-  const isClosed =
-    now !== null &&
-    now.getTime() >= Date.parse(event.registrationDeadline.value);
 
   const moveMagnet = (pointer: PointerEvent<HTMLAnchorElement>) => {
     if (reducedMotion || pointer.pointerType === "touch") return;
@@ -29,17 +26,21 @@ export function RegisterButton({
   };
 
   const resetMagnet = () => setOffset({ x: 0, y: 0 });
-  const classes = `inline-flex min-h-11 items-center justify-center rounded-md bg-saffron px-5 py-2.5 font-heading text-sm font-semibold text-white shadow-[0_8px_24px_rgba(255,122,26,0.22)] transition-[transform,background-color,box-shadow] hover:bg-[#ec6810] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-saffron disabled:cursor-not-allowed disabled:bg-navy/35 disabled:shadow-none ${className}`;
+  const classes = `inline-flex min-h-11 items-center justify-center rounded-md px-5 py-2.5 font-heading text-sm font-semibold text-white transition-[transform,background-color,box-shadow] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-saffron ${
+    status.isOpen
+      ? "bg-saffron shadow-[0_8px_24px_rgba(255,122,26,0.22)] hover:bg-[#ec6810]"
+      : "cursor-not-allowed bg-navy/35 shadow-none"
+  } ${className}`;
 
-  if (isClosed) {
+  if (!status.isOpen) {
     return (
       <button
         type="button"
         disabled
         className={classes}
-        aria-label="Registration closed"
+        aria-label={status.label}
       >
-        Registration closed
+        {status.label}
       </button>
     );
   }
@@ -54,7 +55,7 @@ export function RegisterButton({
       onPointerLeave={resetMagnet}
       style={{ transform: `translate3d(${offset.x}px, ${offset.y}px, 0)` }}
     >
-      {label}
+      {status.label}
     </a>
   );
 }
