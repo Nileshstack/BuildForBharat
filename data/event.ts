@@ -1,7 +1,7 @@
 export const REGISTER_URL =
   "https://unstop.com/p/build-for-bharat-2026-software-hardware-hackathon-kiet-group-of-institutions-delhi-ncr-1767548";
 export const REGISTRATION_OPEN = true;
-export const registrationDeadline = "2026-10-15T23:59:00+05:30";
+export const registrationDeadline = "2026-10-20T23:59:00+05:30";
 export const registrationMode: "manual" | "auto" = "manual";
 
 export type ScheduleType = "ceremony" | "build" | "break" | "eval" | "fun" | "night";
